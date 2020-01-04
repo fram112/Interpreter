@@ -140,9 +140,9 @@ let modul x y =
 let sum x y =
     if typecheck "int" x && typecheck "int" y
     then (
-        match (x, y) with
-        |   (Int n, Int u) -> Int(n + u)       
-        |   (_,_) -> raise (GenericError "sum function")
+            match (x, y) with
+            |   (Int n, Int u) -> Int(n + u)       
+            |   (_,_) -> raise (GenericError "sum function")
     ) 
     else failwith("Type error");;
 
@@ -243,22 +243,22 @@ let concat s ss =
 (* gets the string of evT type *)
 let getType x = 
     match x with
-        |   Unbound -> "Unbound"
-        |   Int n -> "Int"
-        |   Bool n -> "Bool"
-        |   String n -> "String"
-        |   Closure (a,b,c) -> "Closure"
-        |   RecClosure (a,b,c,d) -> "RecClosure"
-        |   Dictionary d -> "Dictionary";;
+    |   Unbound -> "Unbound"
+    |   Int n -> "Int"
+    |   Bool n -> "Bool"
+    |   String n -> "String"
+    |   Closure (a,b,c) -> "Closure"
+    |   RecClosure (a,b,c,d) -> "RecClosure"
+    |   Dictionary d -> "Dictionary";;
 
 (* gets the default value for a evT type *)
 let defaultValueType typeS =
     match typeS with
-            |   "Int" -> Int(0)
-            |   "Bool" -> Bool(true)
-            |   "String" -> String("")
-            |   "Dictionary" -> Dictionary([])
-            |   _ -> Unbound;;
+    |   "Int" -> Int(0)
+    |   "Bool" -> Bool(true)
+    |   "String" -> String("")
+    |   "Dictionary" -> Dictionary([])
+    |   _ -> Unbound;;
 
 (* selects the correct sum between two evT type, if is defined *)
 let selectSum x y = 
@@ -301,16 +301,16 @@ let rec keySet dict =
 (* verifies if a key is present in a list of keys *)
 let rec containsKey key set = 
     match set with
-        |   [] -> false
-        |   k::tail -> if k = key
+    |   [] -> false
+    |   k::tail -> if k = key
                         then true
                         else containsKey key tail;;
 
 (* filter the dictionary, retaining only items with key present in list *)
 let rec filter list cursor dict =
     match cursor with
-        |   [] -> dict
-        |   (k, v)::tail -> if containsKey k list
+    |   [] -> dict
+    |   (k, v)::tail -> if containsKey k list
                             then filter list tail dict
                             else filter list tail (delete dict k);;
 
@@ -481,11 +481,11 @@ let rec eval (e: exp) (r: 't env) : evT =
 
         and iterate f d r = 
             match d with
-                |   [] -> []
-                |   (k, v)::tail -> (k, (applyAux f v r))::(iterate f tail r) 
+            |   [] -> []
+            |   (k, v)::tail -> (k, (applyAux f v r))::(iterate f tail r) 
 
         and fold f acc dict r = 
             match dict with
-                |   [] -> acc
-                |   (k, v)::tail -> fold f (selectSum acc (applyAux f v r)) tail r
+            |   [] -> acc
+            |   (k, v)::tail -> fold f (selectSum acc (applyAux f v r)) tail r
     ;;
